@@ -27,3 +27,6 @@ report has 3 properties:
 ## Dependencies
  - python 2.7+
  - lighthouse installed
+
+## Changes
+[You can find all changes in CHANGELOG!](CHANGELOG.md)

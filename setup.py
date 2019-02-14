@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lighthouse',
-    version='1.0',
+    version='1.0.1',
     description='Lightouse runner',
     author='Adam Cupiał',
     author_email='cupial.adam@gmail.com',

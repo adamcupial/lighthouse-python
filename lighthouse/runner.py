@@ -28,27 +28,34 @@ class LighthouseRunner(object):
                 default is True
         """
 
+        assert form_factor in ['mobile', 'desktop']
+
         _, self.__report_path = tempfile.mkstemp(suffix='.json')
         self._run(url, form_factor, quiet)
         self.report = self._get_report()
         self._clean()
 
     def _run(self, url, form_factor, quiet):
-        subprocess.call([
-            'lighthouse',
-            url,
-            '--quiet' if quiet else '',
-            '--chrome-flags',
-            '"--headless"',
-            '--preset',
-            'full',
-            '--emulated-form-factor',
-            form_factor,
-            '--output',
-            'json',
-            '--output-path',
-            '{0}'.format(self.__report_path),
-        ])
+        report_path = self.__report_path
+
+        try:
+            subprocess.check_call(' '.join([
+                'lighthouse',
+                url,
+                '--quiet' if quiet else '',
+                '--chrome-flags="--headless"',
+                '--preset=full',
+                '--emulated-form-factor={0}'.format(form_factor),
+                '--output=json',
+                '--output-path={0}'.format(report_path),
+            ]), shell=True)
+        except subprocess.CalledProcessError as exc:
+            msg = '''
+                Command "{0}"
+                returned an error code: {1},
+                output: {2}
+            '''.format(exc.cmd, exc.returncode, exc.output)
+            raise RuntimeError(msg)
 
     def _get_report(self):
         with open(self.__report_path, 'r') as fil:

@@ -4,6 +4,11 @@
 This library is a simple wrapper around lighthouse-cli runner that runs the audit and parses a result in friendly manner.
 
 ## Installation
+if lighthouse is not installed:
+```bash
+npm install -g lighthouse
+```
+
 ```bash
 pip install git+https://github.com/adamcupial/lighthouse-python.git#egg=lighthouse
 ```
@@ -26,4 +31,7 @@ report has 3 properties:
 
 ## Dependencies
  - python 2.7+
- - lighthouse installed
+ - node package lighthouse installed
+
+## Changes
+[You can find all changes in CHANGELOG!](CHANGELOG.md)

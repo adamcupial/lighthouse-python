@@ -18,7 +18,8 @@ class LighthouseRunner(object):
         report (LighthouseReport): object with simplified report
     """
 
-    def __init__(self, url, form_factor='mobile', quiet=True):
+    def __init__(self, url, form_factor='mobile', quiet=True,
+                 additional_settings=None):
         """
         Args:
             url (str): url to test
@@ -26,20 +27,23 @@ class LighthouseRunner(object):
                 default is mobile
             quiet (bool, optional): should not output anything to stdout,
                 default is True
+            additional_settings (list, optional): list of additional params
         """
 
         assert form_factor in ['mobile', 'desktop']
 
         _, self.__report_path = tempfile.mkstemp(suffix='.json')
-        self._run(url, form_factor, quiet)
+        self._run(url, form_factor, quiet, additional_settings)
         self.report = self._get_report()
         self._clean()
 
-    def _run(self, url, form_factor, quiet):
+    def _run(self, url, form_factor, quiet, additional_settings=None):
         report_path = self.__report_path
 
+        additional_settings = additional_settings or []
+
         try:
-            subprocess.check_call(' '.join([
+            command = [
                 'lighthouse',
                 url,
                 '--quiet' if quiet else '',
@@ -48,7 +52,10 @@ class LighthouseRunner(object):
                 '--emulated-form-factor={0}'.format(form_factor),
                 '--output=json',
                 '--output-path={0}'.format(report_path),
-            ]), shell=True)
+            ]
+
+            command = command + additional_settings
+            subprocess.check_call(' '.join(command), shell=True)
         except subprocess.CalledProcessError as exc:
             msg = '''
                 Command "{0}"

@@ -5,6 +5,9 @@ import json
 import os
 import subprocess
 import tempfile
+from collections import namedtuple
+from functools import reduce
+from tqdm import tqdm
 
 # Own
 from report import LighthouseReport
@@ -70,3 +73,30 @@ class LighthouseRunner(object):
 
     def _clean(self):
         os.remove(self.__report_path)
+
+
+class LighthouseRepeatRunner(object):
+    def __init__(self, url, form_factor='mobile', quiet=True,
+                 additional_settings=None, repeats=3):
+        reports = []
+
+        progress = tqdm(range(1, repeats + 1), desc='Repeating test')
+
+        for i in progress:
+            progress.set_description('Run {0}/{1}'.format(i, repeats))
+            reports.append(LighthouseRunner(url, form_factor=form_factor,
+                                            quiet=quiet,
+                                            additional_settings=additional_settings).report)   # noqa: E501
+
+        report = namedtuple('LighthouseAveragedReport', 'timings, score')
+        self.report = report(
+            timings=self._get_average([getattr(x, 'timings') for x in reports]),  # noqa: E501
+            score=self._get_average([getattr(x, 'score') for x in reports])
+        )
+
+    def _get_average(self, obj_lst):
+        ret = {}
+        for key in obj_lst[0].keys():
+            lst = [x.get(key) for x in obj_lst]
+            ret[key] = reduce(lambda a, b: a + b, lst) / len(lst)
+        return ret

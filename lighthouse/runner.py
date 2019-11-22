@@ -10,7 +10,7 @@ from functools import reduce
 from tqdm import tqdm
 
 # Own
-from report import LighthouseReport
+from .report import LighthouseReport
 
 
 class LighthouseRunner(object):

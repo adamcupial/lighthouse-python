@@ -1,6 +1,12 @@
-from runner import LighthouseRepeatRunner
+# Python Standard Library
 from itertools import product
+
+# Third party modules
 from tqdm import tqdm
+
+# Local imports
+from .runner import LighthouseRepeatRunner
+
 
 class BatchRunner(object):
     def __init__(self, urls, form_factors, quiet=True,

@@ -39,6 +39,12 @@ class LighthouseReport(object):
         self.__timings = timings
 
     @property
+    def raw(self):
+        """ Dictionary of lighthouse's raw report """
+
+        return self.__data
+
+    @property
     def score(self):
         """ Dictionary of lighthouse's category name: score (0 to 1) """
 

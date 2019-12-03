@@ -25,6 +25,7 @@ print(report.audits['performance'].failed)
 
 report has 3 properties:
 
+- raw: return entire report
 - score: returns dict where keys are categories and values are scores (0 to 1)
 - timings: returns dict where keys are timings and values are timedelta objects
 - audits: dict where keys are categories and values are objects with passed and failed lists attached

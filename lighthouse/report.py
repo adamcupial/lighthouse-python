@@ -53,7 +53,7 @@ class LighthouseReport(object):
         """ Dictionary of lighthouse's timings names: timedelta times """
 
         return {
-            k: timedelta(milliseconds=v.get('rawValue'))
+            k: timedelta(milliseconds=v.get('numericValue')) 
             for k, v
             in self.__data['audits'].items()
             if k in self.__timings

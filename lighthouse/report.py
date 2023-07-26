@@ -92,7 +92,7 @@ class LighthouseReport(object):
                     'display': v.get('displayValue'),
                 })
                 for k, v in all_audits.items()
-                if v.get('score', 0) < 1 and
+                if (v.get('score',0) is None or v.get('score', 0) < 1) and
                 v.get('scoreDisplayMode') not in sdm_to_reject
             ]
 

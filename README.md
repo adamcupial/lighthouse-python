@@ -22,9 +22,13 @@ pip install lighthouse-python-plus
 ```python
 from lighthouse import LighthouseRunner
 
-report = LighthouseRunner('https://github.com/adamcupial', form_factor='desktop', quiet=False).report
+TIMINGS = [
+    'speed-index'
+]
+
+report = LighthouseRunner('https://github.com/adamcupial', form_factor='desktop', quiet=False, timings=TIMINGS).report
 assert report.score['performance'] > 0.5
-print(report.audits['performance'].failed)
+print(report.audits(0.5)['performance'].failed)
 ```
 
 report has 3 properties:

@@ -5,15 +5,15 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 project_urls = {
-  'Github': 'https://github.com/adamcupial/lighthouse-python',
+  'Github': 'https://github.com/sh-alireza/lighthouse-python-plus',
 }
 
 setup(
-    name='lighthouse_python',
-    version='1.0.3',
+    name='lighthouse_python_plus',
+    version='1.1.0',
     description='Lighthouse runner is a Python package that wraps the Lighthouse tool for easy integration into Python projects.',
-    author='Adam Cupial',
-    author_email='cupial.adam@gmail.com',
+    author=['Adam Cupial','alireza sharifi'],
+    author_email=['cupial.adam@gmail.com','sharifialireza276@gmail.com'],
     project_urls=project_urls,
     packages=find_packages(),
     install_requires=[

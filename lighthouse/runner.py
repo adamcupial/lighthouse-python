@@ -173,7 +173,6 @@ class LighthouseRunner:
         os.remove(self.report_path+".report.json")
         os.remove(self.report_path+".report.html")
 
-
 class LighthouseRepeatRunner:
     """
     A class for running performance tests using Lighthouse, multiple times and returning 
@@ -187,7 +186,7 @@ class LighthouseRepeatRunner:
     """
     
     def __init__(self, url: str, form_factor: str = 'mobile', quiet: bool = True,
-                 additional_settings: List[str] = [], repeats: int = 3):
+                 additional_settings: List[str] = [], repeats: int = 3, timings:List[str]=BASE_TIMINGS):
         """ 
         Initialize a new LighthouseRepeatRunner object.
         
@@ -204,7 +203,9 @@ class LighthouseRepeatRunner:
                 
             repeats (int, optional): The number of times to repeat the Lighthouse performance test. 
                 Defaults to 3.
-                
+            
+            timings (list, optional): A list of performance metrics to measure during the test.
+                Defaults to BASE_TIMINGS, which includes several common metrics.
         """
         
         # Initialize an empty list to store the Lighthouse reports from each test repeat
@@ -218,7 +219,7 @@ class LighthouseRepeatRunner:
             progress.set_description('Run {0}/{1}'.format(i, repeats))
             reports.append(LighthouseRunner(url, form_factor=form_factor,
                                             quiet=quiet,
-                                            additional_settings=additional_settings).report) 
+                                            additional_settings=additional_settings,timings=timings).report) 
 
         # Calculate the average values for each performance metric across all test repeats
         report = namedtuple('LighthouseAveragedReport', 'timings, score')
@@ -253,7 +254,7 @@ class BatchRunner:
     """
     
     def __init__(self, urls: List[str], form_factors: List[str], quiet: bool = True,
-                 additional_settings: dict = None, repeats: int = 3):
+                 additional_settings: dict = None, repeats: int = 3, timings:List[str]=BASE_TIMINGS):
         """
         Args:
             urls (list(str)): List of URLs to run Lighthouse reports on.
@@ -266,6 +267,9 @@ class BatchRunner:
                 Defaults to None.
                 
             repeats (int, optional): Number of times to repeat each report. Defaults to 3.
+            
+            timings (list, optional): A list of performance metrics to measure during the test.
+                Defaults to BASE_TIMINGS, which includes several common metrics.
         """
         
         # Ensure urls and form_factors are lists
@@ -286,5 +290,5 @@ class BatchRunner:
             # Run the Lighthouse report for this combination and append it to reports list
             report = LighthouseRepeatRunner(url, factor, quiet,
                                             additional_settings,
-                                            repeats).report
+                                            repeats=repeats,timings=timings).report
             self.reports.append((url, factor, report))

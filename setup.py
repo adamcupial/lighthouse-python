@@ -12,8 +12,8 @@ setup(
     name='lighthouse_python_plus',
     version='1.1.0',
     description='Lighthouse runner is a Python package that wraps the Lighthouse tool for easy integration into Python projects.',
-    author=['Adam Cupial','alireza sharifi'],
-    author_email=['cupial.adam@gmail.com','sharifialireza276@gmail.com'],
+    author='alireza sharifi',
+    author_email='sharifialireza276@gmail.com',
     project_urls=project_urls,
     packages=find_packages(),
     install_requires=[

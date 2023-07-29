@@ -10,7 +10,7 @@ project_urls = {
 
 setup(
     name='lighthouse_python_plus',
-    version='1.1.0',
+    version='1.2.0',
     description='Lighthouse runner is a Python package that wraps the Lighthouse tool for easy integration into Python projects.',
     author='alireza sharifi',
     author_email='sharifialireza276@gmail.com',

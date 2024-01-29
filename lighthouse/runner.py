@@ -116,12 +116,13 @@ class LighthouseRunner:
                 'lighthouse',
                 url,
                 '--quiet' if quiet else '',
-                '--chrome-flags="--headless --no-sandbox"',
+                '--chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"',
                 '--preset=perf',
                 '--emulated-form-factor={0}'.format(form_factor),
                 '--output=json',
                 '--output=html',
                 '--output-path={0}'.format(self.report_path),
+                '--no-enable-error-reporting',
             ]
 
             # Run the Lighthouse CLI command

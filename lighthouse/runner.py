@@ -122,6 +122,7 @@ class LighthouseRunner:
                 '--output=json',
                 '--output=html',
                 '--output-path={0}'.format(self.report_path),
+                '--no-enable-error-reporting',
             ]
 
             # Run the Lighthouse CLI command
